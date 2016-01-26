@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cruise xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="cruise-config.xsd" schemaVersion="77">
+  <server artifactsdir="artifacts" commandRepositoryLocation="default" serverId="a36636a0-8963-449d-a557-16401fde46ce" />
+  <pipelines group="BasicExamples">
+    <pipeline name="LinearPipeline">
+      <materials>
+        <git url="https://github.com/gocd-demo/webinar-code.git" />
+      </materials>
+      <stage name="Commit">
+        <jobs>
+          <job name="FirstJob">
+            <tasks>
+              <exec command="/bin/echo">
+                <arg>"Output from the job"</arg>
+              </exec>
+            </tasks>
+          </job>
+        </jobs>
+      </stage>
+      <stage name="UnitTest">
+        <jobs>
+          <job name="FirstJob">
+            <tasks>
+              <exec command="/bin/echo">
+                <arg>"Output from the job"</arg>
+              </exec>
+            </tasks>
+          </job>
+        </jobs>
+      </stage>
+      <stage name="Package">
+        <jobs>
+          <job name="FirstJob">
+            <tasks>
+              <exec command="/bin/echo">
+                <arg>"Output from the job"</arg>
+              </exec>
+            </tasks>
+          </job>
+        </jobs>
+      </stage>
+      <stage name="FunctionalTest">
+        <jobs>
+          <job name="FirstJob">
+            <tasks>
+              <exec command="/bin/echo">
+                <arg>"Output from the job"</arg>
+              </exec>
+            </tasks>
+          </job>
+        </jobs>
+      </stage>
+      <stage name="UserAcceptance">
+        <jobs>
+          <job name="FirstJob">
+            <tasks>
+              <exec command="/bin/echo">
+                <arg>"Output from the job"</arg>
+              </exec>
+            </tasks>
+          </job>
+        </jobs>
+      </stage>
+      <stage name="DeployStaging">
+        <jobs>
+          <job name="FirstJob">
+            <tasks>
+              <exec command="/bin/echo">
+                <arg>"Output from the job"</arg>
+              </exec>
+            </tasks>
+          </job>
+        </jobs>
+      </stage>
+      <stage name="DeployProduction">
+        <jobs>
+          <job name="FirstJob">
+            <tasks>
+              <exec command="/bin/echo">
+                <arg>"Output from the job"</arg>
+              </exec>
+            </tasks>
+          </job>
+        </jobs>
+      </stage>
+    </pipeline>
+  </pipelines>
+  <pipelines group="Development">
+    <pipeline name="AppDevelopment">
+      <materials>
+        <git url="https://github.com/gocd-demo/webinar-code.git" />
+      </materials>
+      <stage name="Commit">
+        <jobs>
+          <job name="FirstJob">
+            <tasks>
+              <exec command="/bin/echo">
+                <arg>"Output from the job"</arg>
+              </exec>
+            </tasks>
+          </job>
+        </jobs>
+      </stage>
+      <stage name="UnitTest">
+        <jobs>
+          <job name="FirstJob">
+            <tasks>
+              <exec command="/bin/echo">
+                <arg>"Output from the job"</arg>
+              </exec>
+            </tasks>
+          </job>
+        </jobs>
+      </stage>
+      <stage name="Package">
+        <jobs>
+          <job name="FirstJob">
+            <tasks>
+              <exec command="jar">
+                <arg>cf</arg>
+                <arg>myapp.jar</arg>
+                <arg>README.md</arg>
+                <runif status="passed" />
+              </exec>
+            </tasks>
+            <artifacts>
+              <artifact src="myapp.jar" dest="package" />
+            </artifacts>
+          </job>
+        </jobs>
+      </stage>
+    </pipeline>
+    <pipeline name="FunctionalTests">
+      <materials>
+        <pipeline pipelineName="AppDevelopment" stageName="Package" />
+      </materials>
+      <stage name="Deploy">
+        <jobs>
+          <job name="deployApplications">
+            <tasks>
+              <exec command="/bin/echo">
+                <arg>"Deployment Job"</arg>
+              </exec>
+            </tasks>
+          </job>
+        </jobs>
+      </stage>
+      <stage name="functionalTests">
+        <jobs>
+          <job name="TestSuite001">
+            <tasks>
+              <exec command="/bin/echo">
+                <arg>"test suite 001"</arg>
+              </exec>
+            </tasks>
+          </job>
+          <job name="TestSuite002">
+            <tasks>
+              <exec command="/bin/echo">
+                <arg>"test suite 002"</arg>
+              </exec>
+            </tasks>
+          </job>
+          <job name="TestSuite003">
+            <tasks>
+              <exec command="/bin/echo">
+                <arg>"test suite 003"</arg>
+              </exec>
+            </tasks>
+          </job>
+        </jobs>
+      </stage>
+    </pipeline>
+    <pipeline name="UserAcceptance">
+      <materials>
+        <pipeline pipelineName="AppDevelopment" stageName="Package" />
+      </materials>
+      <stage name="Deploy">
+        <jobs>
+          <job name="deployApplications">
+            <tasks>
+              <exec command="/bin/echo">
+                <arg>"Deployment Job"</arg>
+              </exec>
+            </tasks>
+          </job>
+        </jobs>
+      </stage>
+      <stage name="Approved">
+        <approval type="manual" />
+        <jobs>
+          <job name="Approve">
+            <tasks>
+              <exec command="/bin/echo">
+                <arg>"Approval"</arg>
+                <runif status="passed" />
+              </exec>
+            </tasks>
+          </job>
+        </jobs>
+      </stage>
+    </pipeline>
+    <pipeline name="DeployStaging">
+      <materials>
+        <pipeline pipelineName="UserAcceptance" stageName="Approved" />
+        <pipeline pipelineName="FunctionalTests" stageName="functionalTests" />
+      </materials>
+      <stage name="Deploy">
+        <jobs>
+          <job name="DeployApplication">
+            <tasks>
+              <exec command="/bin/echo">
+                <arg>"Deployment Task"</arg>
+              </exec>
+            </tasks>
+          </job>
+        </jobs>
+      </stage>
+      <stage name="Verify">
+        <jobs>
+          <job name="verify">
+            <tasks>
+              <exec command="/bin/echo">
+                <arg>Verify Deployment</arg>
+              </exec>
+            </tasks>
+          </job>
+        </jobs>
+      </stage>
+    </pipeline>
+  </pipelines>
+  <pipelines group="Production">
+    <pipeline name="DeployProduction">
+      <materials>
+        <pipeline pipelineName="DeployStaging" stageName="Verify" />
+      </materials>
+      <stage name="Deploy">
+        <jobs>
+          <job name="DeployApplication">
+            <tasks>
+              <exec command="/bin/echo">
+                <arg>"Deployment Task"</arg>
+              </exec>
+            </tasks>
+          </job>
+        </jobs>
+      </stage>
+      <stage name="Verify">
+        <jobs>
+          <job name="verify">
+            <tasks>
+              <exec command="/bin/echo">
+                <arg>Verify Deployment</arg>
+              </exec>
+            </tasks>
+          </job>
+        </jobs>
+      </stage>
+    </pipeline>
+  </pipelines>
+</cruise>
+
