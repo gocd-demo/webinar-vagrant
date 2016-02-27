@@ -45,7 +45,7 @@ Vagrant.configure(2) do |config|
   #
   config.vm.provider "virtualbox" do |vb|
   #   # Display the VirtualBox GUI when booting the machine
-  #   vb.gui = true
+  #  vb.gui = true
   #
   #   # Customize the amount of memory on the VM:
     vb.memory = "4096"
@@ -66,8 +66,10 @@ Vagrant.configure(2) do |config|
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
     sudo apt-get update
-	echo "deb http://dl.bintray.com/gocd/gocd-deb/ /" > /etc/apt/sources.list.d/gocd.list
-	wget --quiet -O - "https://bintray.com/user/downloadSubjectPublicKey?username=gocd" | sudo apt-key add -
+
+	echo "deb https://download.go.cd /" | sudo tee /etc/apt/sources.list.d/gocd.list
+	curl https://download.go.cd/GOCD-GPG-KEY.asc | sudo apt-key add -
+
 	apt-get update
 	apt-get install -y git
 	apt-get install -y default-jdk
