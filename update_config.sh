@@ -1,4 +1,6 @@
 #!/bin/bash
+set -e
+set -x
 
         # Put our config file in place
         OLD_ID=$(sed -n 's/.*serverId="\([^"]*\)".*/\1/p' /etc/go/cruise-config.xml)
