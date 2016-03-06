@@ -76,7 +76,9 @@ Vagrant.configure(2) do |config|
 	apt-get install -y go-server
 
 	# Put our config file in place
+	/etc/init.d/go-server stop
 	/bin/bash /vagrant/update_config.sh
+	/etc/init.d/go-server start
 
 	apt-get install -y go-agent
 	/etc/init.d/go-agent start
