@@ -15,7 +15,7 @@ No specific versions have been identied as required, but it's probably a good id
 # Setting it up
 
 * Clone this repo
-* In a terminal, enter the vagrant-webinar directory
+* In a terminal, enter the webinar-vagrant directory
 * Type 'vagrant up'
   * This step could take a while depending on the speed of your internet connection. When it's done you'll be returned to the command line.
 
