@@ -15,7 +15,7 @@ No specific versions have been identied as required, but it's probably a good id
 # Setting it up
 
 * Clone this repo
-* In a terminal, enter the vagrant-webinar directory
+* In a terminal, enter the webinar-vagrant directory
 * Type 'vagrant up'
   * This step could take a while depending on the speed of your internet connection. When it's done you'll be returned to the command line.
 
@@ -23,10 +23,6 @@ No specific versions have been identied as required, but it's probably a good id
 
 * Open your web browser and navigate to http://localhost:8153/
 * You should see a number of pipelines on a GoCD instance. (see known issues below if you don't)
-
-# Known issues
-
-On occasion the config file isn't copied into place automatically, no idea why. If that happens, the cruise-config.xml from this repo can be copied into the new server by editing the XML at http://localhost:8153/go/admin/config_xml on your machine. To do this, copy everything _below_ the <server line in the included file and replace everything below your <server line in the XML.
 
 
 
