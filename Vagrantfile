@@ -65,15 +65,12 @@ Vagrant.configure(2) do |config|
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
-    sudo apt-get update
 
 	echo "deb https://download.go.cd /" | sudo tee /etc/apt/sources.list.d/gocd.list
 	curl https://download.go.cd/GOCD-GPG-KEY.asc | sudo apt-key add -
 
 	apt-get update
-	apt-get install -y git
-	apt-get install -y default-jdk
-	apt-get install -y go-server
+	apt-get install -y git default-jdk go-server
 
 	# Put our config file in place
 	/etc/init.d/go-server stop
@@ -89,6 +86,7 @@ Vagrant.configure(2) do |config|
   	cp /etc/default/go-agent /etc/default/go-agent-1
   	mkdir /var/{lib,log}/go-agent-1
   	chown go:go /var/{lib,log}/go-agent-1
+    ln -s /etc/init.d/go-agent-1 /etc/rc2.d/S99go-agent-1
 	/etc/init.d/go-agent-1 start
 
 	# Install 3rd agent
@@ -97,6 +95,7 @@ Vagrant.configure(2) do |config|
   	cp /etc/default/go-agent /etc/default/go-agent-2
   	mkdir /var/{lib,log}/go-agent-2
   	chown go:go /var/{lib,log}/go-agent-2
+    ln -s /etc/init.d/go-agent-2 /etc/rc2.d/S99go-agent-2
 	/etc/init.d/go-agent-2 start
   SHELL
 end
