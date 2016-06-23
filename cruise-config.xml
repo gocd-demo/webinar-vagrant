@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<cruise xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="cruise-config.xsd" schemaVersion="78">
-  <server artifactsdir="artifacts" commandRepositoryLocation="default" serverId="a36636a0-8963-449d-a557-16401fde46ce" />
+<cruise xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="cruise-config.xsd" schemaVersion="81">
+  <server artifactsdir="artifacts" commandRepositoryLocation="default" serverId="73e1c9eb-7c1e-453f-bfbf-d7d4edc79faf" />
   <pipelines group="BasicExamples">
     <pipeline name="LinearPipeline">
       <materials>
@@ -228,11 +228,40 @@
         </jobs>
       </stage>
     </pipeline>
+    <pipeline name="PerformanceTests">
+      <materials>
+        <pipeline pipelineName="AppDevelopment" stageName="Package" />
+      </materials>
+      <stage name="Deploy">
+        <jobs>
+          <job name="deployApplications">
+            <tasks>
+              <exec command="/bin/echo">
+                <arg>"Deployment Job"</arg>
+              </exec>
+            </tasks>
+          </job>
+        </jobs>
+      </stage>
+      <stage name="PerformanceTests">
+        <jobs>
+          <job name="Approve">
+            <tasks>
+              <exec command="/bin/echo">
+                <arg>"Approval"</arg>
+                <runif status="passed" />
+              </exec>
+            </tasks>
+          </job>
+        </jobs>
+      </stage>
+    </pipeline>
   </pipelines>
   <pipelines group="Production">
     <pipeline name="DeployProduction">
       <materials>
         <pipeline pipelineName="DeployStaging" stageName="Verify" />
+        <pipeline pipelineName="PerformanceTests" stageName="PerformanceTests" />
       </materials>
       <stage name="Deploy">
         <jobs>
@@ -259,4 +288,3 @@
     </pipeline>
   </pipelines>
 </cruise>
-
