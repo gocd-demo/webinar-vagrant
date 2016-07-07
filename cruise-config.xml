@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<cruise xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="cruise-config.xsd" schemaVersion="81">
-  <server artifactsdir="artifacts" commandRepositoryLocation="default" serverId="73e1c9eb-7c1e-453f-bfbf-d7d4edc79faf" />
+<cruise xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="cruise-config.xsd" schemaVersion="82">
+  <server artifactsdir="artifacts" commandRepositoryLocation="default" serverId="6da9de94-46f0-4978-8a2c-a10f0af485d1" />
   <pipelines group="BasicExamples">
     <pipeline name="LinearPipeline">
       <materials>
@@ -147,24 +147,12 @@
       </stage>
       <stage name="functionalTests">
         <jobs>
-          <job name="TestSuite001">
+          <job name="TestSuite" runInstanceCount="3">
             <tasks>
-              <exec command="/bin/echo">
-                <arg>"test suite 001"</arg>
-              </exec>
-            </tasks>
-          </job>
-          <job name="TestSuite002">
-            <tasks>
-              <exec command="/bin/echo">
-                <arg>"test suite 002"</arg>
-              </exec>
-            </tasks>
-          </job>
-          <job name="TestSuite003">
-            <tasks>
-              <exec command="/bin/echo">
-                <arg>"test suite 003"</arg>
+              <exec command="/bin/bash">
+                <arg>-c</arg>
+                <arg>/bin/echo "This is job $GO_JOB_RUN_INDEX of $GO_JOB_RUN_COUNT"</arg>
+                <runif status="passed" />
               </exec>
             </tasks>
           </job>
@@ -288,3 +276,4 @@
     </pipeline>
   </pipelines>
 </cruise>
+
