@@ -81,21 +81,21 @@ Vagrant.configure(2) do |config|
 	/etc/init.d/go-agent start
 
 	# Install 2nd agent
-	ln -s /etc/init.d/go-agent /etc/init.d/go-agent-1
-  	ln -s /usr/share/go-agent /usr/share/go-agent-1
-  	cp /etc/default/go-agent /etc/default/go-agent-1
-  	mkdir /var/{lib,log}/go-agent-1
-  	chown go:go /var/{lib,log}/go-agent-1
-    ln -s /etc/init.d/go-agent-1 /etc/rc2.d/S99go-agent-1
+  cp /etc/init.d/go-agent /etc/init.d/go-agent-1
+  sed -i 's/# Provides: go-agent$/# Provides: go-agent-1/g' /etc/init.d/go-agent-1
+  ln -s /usr/share/go-agent /usr/share/go-agent-1
+  cp -p /etc/default/go-agent /etc/default/go-agent-1
+  mkdir /var/{lib,log}/go-agent-1
+  chown go:go /var/{lib,log}/go-agent-1
 	/etc/init.d/go-agent-1 start
 
 	# Install 3rd agent
-	ln -s /etc/init.d/go-agent /etc/init.d/go-agent-2
-  	ln -s /usr/share/go-agent /usr/share/go-agent-2
-  	cp /etc/default/go-agent /etc/default/go-agent-2
-  	mkdir /var/{lib,log}/go-agent-2
-  	chown go:go /var/{lib,log}/go-agent-2
-    ln -s /etc/init.d/go-agent-2 /etc/rc2.d/S99go-agent-2
+  cp /etc/init.d/go-agent /etc/init.d/go-agent-2
+  sed -i 's/# Provides: go-agent$/# Provides: go-agent-2/g' /etc/init.d/go-agent-2
+  ln -s /usr/share/go-agent /usr/share/go-agent-2
+  cp -p /etc/default/go-agent /etc/default/go-agent-2
+  mkdir /var/{lib,log}/go-agent-2
+  chown go:go /var/{lib,log}/go-agent-2
 	/etc/init.d/go-agent-2 start
   SHELL
 end
