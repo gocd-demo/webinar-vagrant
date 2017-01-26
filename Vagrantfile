@@ -66,8 +66,8 @@ Vagrant.configure(2) do |config|
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
 
-	echo "deb https://download.go.cd /" | sudo tee /etc/apt/sources.list.d/gocd.list
-	curl https://download.go.cd/GOCD-GPG-KEY.asc | sudo apt-key add -
+	echo "deb https://download.gocd.io /" | sudo tee /etc/apt/sources.list.d/gocd.list
+	curl https://download.gocd.io/GOCD-GPG-KEY.asc | sudo apt-key add -
 
 	apt-get update
 	apt-get install -y git default-jdk go-server
